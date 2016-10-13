@@ -104,6 +104,7 @@ private:
 	void ReSetValue(string);			//ONLY USE THIS IF THERE ALREADY IS A VALUE
 	void ReSetValue(char*,unsigned short);
 	void AttachToValue(string);
+	char *GetValueSubstring(unsigned short, unsigned short length = 50000);		//This huge default value makes it so if only one parameter is called, a substring from this starting point to the end is returned
 	void PrintValue() const;
 
 	void SwapWith(baseX&);

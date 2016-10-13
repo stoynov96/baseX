@@ -230,6 +230,18 @@ void baseX::AttachToValue(string attachment) {
 	delete [] value;
 	value = newValue;
 }
+char *baseX::GetValueSubstring(unsigned short startIndex, unsigned short length) {
+	if(startIndex + length > numberOfDigits) {	//check if the desired substring is greater than the size of value
+		length = numberOfDigits - startIndex;
+	}
+	char *newValue = new char[length];
+	//TODO: Replace with memcpy
+	for(unsigned short i = 0; i < length; i ++) {
+		newValue[i] = value[startIndex + i];
+	}
+	delete [] value;
+	value = newValue;
+}
 void baseX::PrintValue() const {
 	for(unsigned short i = 0; i < numberOfDigits; i ++) {
 		cout << value[i];
@@ -453,10 +465,11 @@ baseX baseX::OfBase(unsigned short newBase) const {
 
 void baseX::GetValueFromDecimalDigits() {
 	//TODO: OVERHAUL OF THIS FUNCTION
+	delete [] value;
+	value = new char[numberOfDigits];
 	for (int i = 0; i < numberOfDigits; i ++) {
 		value[i] = baseXHelp.digits[digitValues[i]];
 	}
-	ReSetValue("0");
 }
 
 void baseX::GetDecimalValuesOfDigits() {
@@ -470,8 +483,11 @@ void baseX::GetDecimalValuesOfDigits() {
 }
 
 void baseX::SeperateSignAndValue() {
-	//TODO: OVERHAUL OF THIS FUNCTION
-
+	isPositive = !(value[0] == BASEX_NUMBER_SIGNS[0]);		//BASEX_NUMBER_SIGNS holds the signs for + and -. [0] is minus, because 0 = false (for isPositive)
+	if(!isPositive) {
+		value = GetValueSubstring(1);
+		numberOfDigits --;
+	}
 }
 
 void baseX::Display() const {
