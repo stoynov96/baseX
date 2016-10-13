@@ -172,6 +172,7 @@ baseX::baseX(int newBase, string newValue) {
 	OptimizeSize();
 }
 baseX::baseX(const baseX& b) {
+	this->value = new char[BASEX_DEFAULT_NUMBER_OF_DIGITS];
 	*this = b;
 }
 baseX::~baseX() {
@@ -210,7 +211,9 @@ void baseX::ReSetValue(char newValue[], unsigned short newValueSize) {
 }
 
 void baseX::AttachToValue(string attachment) {
-	cout << "Attaching " << attachment << " to value...\n";
+	/*
+	The function increases the value of numberOfDigits. Must not do it seperately
+	*/
 	unsigned short newValueSize = numberOfDigits + attachment.size();
 	char *newValue = new char[newValueSize];
 
@@ -219,10 +222,11 @@ void baseX::AttachToValue(string attachment) {
 		newValue[i] = value[i];
 	}
 	for(unsigned short i = numberOfDigits; i < newValueSize; i ++) {
-		newValue[i] = attachment[i];
+		newValue[i] = attachment[i - numberOfDigits];
 	}
 
 	numberOfDigits = newValueSize;
+
 	delete [] value;
 	value = newValue;
 }
@@ -312,16 +316,11 @@ baseX baseX::MultipliedByBase() const {
 /*
 	Multiplies the number by its base by just adding a zero at the end
 */
-	//TODO: OVERHAUL. Make it work with a dynamic char
 
-	cout << "Multiplying by base...\n";
-	baseX newNumber = *this;
-	cout << endl;										//debug
-	cout << "Nod: " << numberOfDigits << endl;			//debug
+	baseX newNumber(*this);
 	newNumber.AttachToValue("0");					//adding the new zero to the string
-	cout << "Nod: " << numberOfDigits << endl;			//debug
+
 	newNumber.digitValues[numberOfDigits] = 0;		//making the new digit zero
-	//newNumber.numberOfDigits ++;					//increasing the number of digits, to actually add the new zero
 
 	return newNumber;
 }

@@ -4,7 +4,7 @@
 const int BASEX_DEFAULT_BASE = 10;
 
 const char BASEX_DEFAULT_VALUE = '0';
-const unsigned short BASEX_DEFAULT_NUMBER_OF_DIGITS = 1;
+const unsigned short BASEX_DEFAULT_NUMBER_OF_DIGITS = 1;			//default number of unique digits used to write numbers with
 
 const short BASEX_MAX_BASE = 100;
 const short BASEX_MAX_NUMBER_OF_DIGITS = 50;
@@ -115,10 +115,8 @@ private:
 	baseX UnsignedSubtraction(baseX) const;
 
 	//Multiplication Helpers
-public:
 	baseX MultipliedByBase() const;
 	baseX MultipliedByDigit(unsigned short) const;
-private:
 	
 	//Division Helpers
 	baseX TakeFirstDigits(unsigned short) const;
