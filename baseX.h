@@ -33,7 +33,7 @@ private:
 	char *digits;
 	
 	//functions
-	void SetArraySize(char*&, unsigned short,unsigned short,char defValue='0') const;
+	void SetArraySize(char*&, unsigned short,unsigned short,char defValue=BASEX_DEFAULT_VALUE) const;
 	void IncreaseArraySize(char*&,unsigned short&,unsigned short) const;
 
 	void GetDigits(ifstream&);
@@ -120,7 +120,10 @@ private:
 	baseX MultipliedByDigit(unsigned short) const;
 	
 	//Division Helpers
+	baseX DividePositives(const baseX&, const baseX&) const;
 	baseX TakeFirstDigits(unsigned short) const;
+	void ApendDigit(unsigned short);
+	unsigned short FindDivisionDigitValue(const baseX&, const baseX&) const;
 
 	void ChangeNumberOfDigits(unsigned short newNumber);
 	void AddZeroes(unsigned short);
